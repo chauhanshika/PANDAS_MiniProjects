@@ -12,24 +12,46 @@ df['order_purchase_timestamp'] = pd.to_datetime(
 # Sort data
 df = df.sort_values(by=['customer_id', 'order_purchase_timestamp'])
 
-# --LAST ACTIVITY PER USER --
+# ---- LAST ACTIVITY ----
 last_activity = df.groupby('customer_id')['order_purchase_timestamp'].max().reset_index()
 last_activity.columns = ['customer_id', 'last_activity_date']
 
-# ---- CURRENT DATE (REFERENCE) ----
+# ---- CURRENT DATE ----
 current_date = df['order_purchase_timestamp'].max()
 
-# --- DAYS SINCE LAST ACTIVITY ---
+# ---- DAYS INACTIVE ----
 last_activity['days_inactive'] = (
     current_date - last_activity['last_activity_date']
 ).dt.days
 
-print("\n---- LAST ACTIVITY ----")
-print(last_activity.head())
+# ---- CHURN CLASSIFICATION ----
+def classify_churn(days):
+    if days <= 30:
+        return "Active"
+    elif days <= 90:
+        return "At Risk"
+    else:
+        return "Churned"
 
-# ---- BASIC STATS ----
-print("\n---- INACTIVITY STATS ----")
-print(last_activity['days_inactive'].describe())
+last_activity['churn_status'] = last_activity['days_inactive'].apply(classify_churn)
 
-# Save output
+# ---- BUSINESS INSIGHTS ----
+total_users = len(last_activity)
+
+churned_users = len(last_activity[last_activity['churn_status'] == "Churned"])
+at_risk_users = len(last_activity[last_activity['churn_status'] == "At Risk"])
+active_users = len(last_activity[last_activity['churn_status'] == "Active"])
+
+print("\n---- BUSINESS INSIGHTS ----")
+print(f"Total Users: {total_users}")
+print(f"Active Users: {active_users}")
+print(f"At Risk Users: {at_risk_users}")
+print(f"Churned Users: {churned_users}")
+
+print("\n---- PERCENTAGE DISTRIBUTION ----")
+print(f"Active: {round((active_users/total_users)*100, 2)}%")
+print(f"At Risk: {round((at_risk_users/total_users)*100, 2)}%")
+print(f"Churned: {round((churned_users/total_users)*100, 2)}%")
+
+# ---- SAVE OUTPUT ----
 last_activity.to_csv("output.csv", index=False)
