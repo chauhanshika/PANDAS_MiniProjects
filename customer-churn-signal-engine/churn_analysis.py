@@ -49,7 +49,8 @@ print("\n---- AVG ORDERS BY SEGMENT ----")
 print(user_df.groupby('churn_status')['total_orders'].mean())
 
 # ---- SAVE OUTPUT ----
-user_df.to_csv("output.csv", index=False)import pandas as pd
+user_df.to_csv("output.csv", index=False)
+import pandas as pd
 import numpy as np
 
 # Load dataset
@@ -98,6 +99,12 @@ print(user_df['churn_status'].value_counts())
 
 print("\n---- AVG ORDERS BY SEGMENT ----")
 print(user_df.groupby('churn_status')['total_orders'].mean())
+# ---- CREATE SUMMARY ----
+summary = user_df['churn_status'].value_counts().reset_index()
+summary.columns = ['churn_status', 'user_count']
+
+summary['percentage'] = (summary['user_count'] / len(user_df)) * 100
 
 # ---- SAVE OUTPUT ----
 user_df.to_csv("output.csv", index=False)
+summary.to_csv("summary.csv", index=False)
