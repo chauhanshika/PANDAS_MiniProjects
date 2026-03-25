@@ -28,3 +28,8 @@ retention_matrix = retention_matrix.divide(retention_matrix[0], axis=0)
 
 print("\nRetention Percentage:")
 print(retention_matrix.head())
+
+# Save output
+retention_matrix.to_csv("retention_matrix.csv")
+
+print("\nRetention matrix saved as retention_matrix.csv")
