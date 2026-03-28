@@ -129,3 +129,8 @@ cohort-retention-analysis/
 ├──Cohort Retention Heatmap
 
 ```
+## 📊 Sample Output
+
+### 🔹 Retention Heatmap
+
+![Retention Heatmap](Cohort Retention Heatmap.png)
