@@ -33,3 +33,11 @@ print(retention_matrix.head())
 retention_matrix.to_csv("retention_matrix.csv")
 
 print("\nRetention matrix saved as retention_matrix.csv")
+
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(retention_matrix, annot=False, cmap="Blues")
+plt.title("Cohort Retention Heatmap")
+
+plt.savefig("result.png")
+plt.show()
