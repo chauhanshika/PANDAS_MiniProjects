@@ -126,11 +126,11 @@ cohort-retention-analysis/
 ├── README.md
 ├── requirements.txt
 ├── resultt.png
-├──Cohort Retention Heatmap
+├──retention_heatmap.png
 
 ```
 ## 📊 Sample Output
 
 ### 🔹 Retention Heatmap
 
-![Retention Heatmap](Cohort Retention Heatmap.png)
+![Retention Heatmap](retention_heatmap.png)
