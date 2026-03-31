@@ -12,7 +12,6 @@ df['order_purchase_timestamp'] = pd.to_datetime(
 # Sort data
 df = df.sort_values(by=['customer_id', 'order_purchase_timestamp'])
 
-# ---- LAST ACTIVITY ----
 last_activity = df.groupby('customer_id')['order_purchase_timestamp'].max().reset_index()
 last_activity.columns = ['customer_id', 'last_activity_date']
 
@@ -64,7 +63,6 @@ df['order_purchase_timestamp'] = pd.to_datetime(
 # Sort data
 df = df.sort_values(by=['customer_id', 'order_purchase_timestamp'])
 
-# ---- LAST ACTIVITY ----
 last_activity = df.groupby('customer_id')['order_purchase_timestamp'].max().reset_index()
 last_activity.columns = ['customer_id', 'last_activity_date']
 
